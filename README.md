@@ -17,9 +17,6 @@ Run a parameter sweep (manually)
 python m0_runner.py --config configs/m0.yaml --override experiments/exp_fast_mode.yaml
 python m0_runner.py --config configs/m0.yaml --override experiments/exp_high_quality.yaml
 
-かしこまりました。コピペの手間を省き、ダウンロードしてそのままGitHubにアップロードできるように、指定された各ファイルをコードブロック形式で個別に提供します。
-
-お手数ですが、それぞれのコードブロックの内容をコピーし、指定されたファイル名でローカルに保存してください。
 
 1. ベースフォルダ (m0/ 直下)
 README.md
