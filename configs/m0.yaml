@@ -1,0 +1,28 @@
+# Default parameters for M0 integrated pipeline
+io:
+  # If not provided, tests/smoke_m0.py will generate dummy assets into tests/assets_min
+  assets_dir: tests/assets_min
+  out_dir: tests/out
+  exp_name: exp_baseline
+
+video:
+  width: 640
+  height: 360
+  fps: 25
+  duration_s: 10  # smoke length
+
+render:
+  # mouth switching & crossfade behavior
+  crossfade_frames: 4
+  ssim_thr: 0.61   # placeholder for future use
+  lapv_thr: 100.0  # placeholder for future use
+
+inputs:
+  mouth_timeline: mouth_timeline.json
+  pose_timeline: pose_timeline.json
+  expression_timeline: expression_timeline.json
+
+atlas:
+  # minimal atlas used by dummy renderer; real implementation can ignore these
+  atlas_png: atlas.png
+  atlas_json: atlas.json
