@@ -1,0 +1,7 @@
+io:
+  exp_name: exp_high_quality
+video:
+  fps: 30
+  duration_s: 12
+render:
+  crossfade_frames: 6
