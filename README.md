@@ -33,14 +33,20 @@ Markdown
 ```bash
 python -m venv .venv && source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
 pip install -r requirements.txt
+
+pip install -r requirements.txt
+python tests/smoke_m0.py
+# → tests/out/exp_baseline/demo.mp4 が出力
+
 # baseline
 python m0_runner.py --config configs/m0.yaml --override experiments/exp_baseline.yaml
+
 # outputs in tests/out/exp_baseline/
 Run a parameter sweep (manually)
 Bash
-
 python m0_runner.py --config configs/m0.yaml --override experiments/exp_fast_mode.yaml
 python m0_runner.py --config configs/m0.yaml --override experiments/exp_high_quality.yaml
+
 Google Colab (thin wrapper)
 In Colab, install the same pinned requirements and call the CLI
 !pip install -r [https://raw.githubusercontent.com/](https://raw.githubusercontent.com/)<your-org>/<repo>/main/requirements.txt
