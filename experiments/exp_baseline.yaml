@@ -1,0 +1,6 @@
+io:
+  exp_name: exp_baseline
+video:
+  duration_s: 10
+render:
+  crossfade_frames: 4
