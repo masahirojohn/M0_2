@@ -1,0 +1,8 @@
+{
+  "out_mp4": "tests/out/exp_baseline/demo.mp4",
+  "fps": 25,
+  "duration_s": 10,
+  "frames": 250,
+  "assets_dir": "tests/assets_min",
+  "exp_name": "exp_baseline"
+}
