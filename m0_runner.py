@@ -65,7 +65,16 @@ def main():
     os.makedirs(exp_dir, exist_ok=True)
     out_mp4 = os.path.join(exp_dir, "demo.mp4")
 
-    render_video(out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value)
+    
+    # 旧:
+# render_video(out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value)
+
+# 新: atlas 情報を渡す
+render_video(
+    out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value,
+    assets_dir=assets_dir, atlas_json_rel=cfg.get("atlas", {}).get("atlas_json", None)
+)
+
 
     # save run log & summary
     run_log = {
