@@ -1,0 +1,8 @@
+{
+  "out_mp4": "tests/out/exp_high_quality/demo.mp4",
+  "fps": 30,
+  "duration_s": 12,
+  "frames": 360,
+  "assets_dir": "tests/assets_min",
+  "exp_name": "exp_high_quality"
+}
