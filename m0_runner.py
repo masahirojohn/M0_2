@@ -39,12 +39,11 @@ def main():
     fps = int(cfg["video"]["fps"])
     duration_s = int(cfg["video"]["duration_s"])
 
-    crossfade_frames = int(cfg["render"]["crossfade_frames"])  # demo
+    crossfade_frames = int(cfg["render"]["crossfade_frames"])
 
-    # timelines
-    mouth_json = os.path.join(assets_dir, cfg["inputs"]["mouth_timeline"])  # [ {t_ms, mouth:"a|i|u|e|o|close"} ]
-    pose_json = os.path.join(assets_dir, cfg["inputs"]["pose_timeline"])    # [ {t_ms, yaw:int} ]
-    expr_json = os.path.join(assets_dir, cfg["inputs"]["expression_timeline"])  # [ {t_ms, emo_id:int, blink:0|1} ]
+    mouth_json = os.path.join(assets_dir, cfg["inputs"]["mouth_timeline"])
+    pose_json = os.path.join(assets_dir, cfg["inputs"]["pose_timeline"])
+    expr_json = os.path.join(assets_dir, cfg["inputs"]["expression_timeline"])
 
     mouth_tl = Timeline.load_json(mouth_json)
     pose_tl = Timeline.load_json(pose_json)
@@ -60,23 +59,15 @@ def main():
         vals.update(e)
         return vals
 
-    # out paths
     exp_dir = os.path.join(out_dir, exp_name)
     os.makedirs(exp_dir, exist_ok=True)
     out_mp4 = os.path.join(exp_dir, "demo.mp4")
 
-    
-    # 旧:
-# render_video(out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value)
+    render_video(
+        out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value,
+        assets_dir=assets_dir, atlas_json_rel=cfg.get("atlas", {}).get("atlas_json", None)
+    )
 
-# 新: atlas 情報を渡す
-render_video(
-    out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value,
-    assets_dir=assets_dir, atlas_json_rel=cfg.get("atlas", {}).get("atlas_json", None)
-)
-
-
-    # save run log & summary
     run_log = {
         "out_mp4": out_mp4,
         "fps": fps,

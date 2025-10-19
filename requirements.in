@@ -1,6 +1,3 @@
-numpy
+pyyaml
 opencv-python-headless
-Pillow
-PyYAML
-pandas
-tqdm
+numpy
