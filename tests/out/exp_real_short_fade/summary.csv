@@ -1,0 +1,7 @@
+key,value
+out_mp4,tests/out/exp_real_short_fade/demo.mp4
+fps,25
+duration_s,6
+frames,150
+assets_dir,tests/assets_real
+exp_name,exp_real_short_fade
