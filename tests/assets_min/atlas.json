@@ -1,1 +1,1 @@
-{"front": {"close": [0, 0, 32, 32], "a": [32, 0, 32, 32]}}
+{"views": {"front": {"close": "front/mouth_close.png", "a": "front/mouth_a.png", "i": "front/mouth_i.png", "u": "front/mouth_u.png", "e": "front/mouth_e.png", "o": "front/mouth_o.png"}}, "fallback": {"view": "front", "mouth": "close"}}
