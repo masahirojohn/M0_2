@@ -21,12 +21,34 @@ def ensure_dummy_assets():
     cv2.imwrite(atlas_png, img)
 
     atlas_json = os.path.join(ASSETS, "atlas.json")
-    pyjson.dump({"front": {"close": [0,0,32,32], "a": [32,0,32,32]}}, open(atlas_json, "w"))
+    pyjson.dump({
+        "views": {
+            "front": {
+                "close": "front/mouth_close.png",
+                "a": "front/mouth_a.png",
+                "i": "front/mouth_i.png",
+                "u": "front/mouth_u.png",
+                "e": "front/mouth_e.png",
+                "o": "front/mouth_o.png"
+            }
+        },
+        "fallback": {
+            "view": "front",
+            "mouth": "close"
+        }
+    }, open(atlas_json, "w"))
 
     # Mouth timeline (every 400ms alternate a/i/u/e/o/close)
     mouths = ["a","i","u","e","o","close"]
     mouth_tl = [{"t_ms": i*400, "mouth": mouths[i % len(mouths)]} for i in range(20)]
     json.dump(mouth_tl, open(os.path.join(ASSETS, "mouth_timeline.json"), "w"))
+
+    # Dummy mouth images
+    for mouth in mouths:
+        mouth_png = os.path.join(ASSETS, "front", f"mouth_{mouth}.png")
+        img = (255 * np.ones((32, 32, 3), dtype=np.uint8))
+        cv2.putText(img, mouth, (5, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,0), 2, cv2.LINE_AA)
+        cv2.imwrite(mouth_png, img)
 
     # Pose timeline (yaw toggles)
     pose_tl = [{"t_ms": i*500, "yaw": (-15 if i%2==0 else 15)} for i in range(16)]
