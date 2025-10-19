@@ -1,0 +1,20 @@
+io:
+  assets_dir: tests/assets_real
+  exp_name: exp_real_missing_i
+
+video:
+  duration_s: 6
+  fps: 25
+  width: 640
+  height: 360
+
+render:
+  crossfade_frames: 4
+
+inputs:
+  mouth_timeline: mouth_timeline.json
+  pose_timeline: pose_timeline.json
+  expression_timeline: expression_timeline.json
+
+atlas:
+  atlas_json: atlas_missing_i.json
