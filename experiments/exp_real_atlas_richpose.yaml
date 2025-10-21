@@ -1,14 +1,16 @@
+# Real assets, rich pose timeline
 io:
   assets_dir: tests/assets_real
   exp_name: exp_real_atlas_richpose
-video:
-  duration_s: 6
-  fps: 25
-render:
-  crossfade_frames: 4
+
 inputs:
-  mouth_timeline: mouth_timeline.json
   pose_timeline: pose_timeline_rich.json
+  # Use a real atlas for this experiment
+  # Note: This file doesn't exist yet, but the smoke test will generate it
+  #       so we can commit it to the repository.
+  #       See smoke_m0.py for details.
+  mouth_timeline: mouth_timeline.json
   expression_timeline: expression_timeline.json
+
 atlas:
   atlas_json: atlas.json

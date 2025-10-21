@@ -64,19 +64,13 @@ def main():
     os.makedirs(exp_dir, exist_ok=True)
     out_mp4 = os.path.join(exp_dir, "demo.mp4")
 
-    # === ここから追加：実行時間測定＋renderの統計を取得 ===
+    # Measure wall time and get stats from render_video
     t0 = time.time()
     stats = render_video(
         out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value,
         assets_dir=assets_dir, atlas_json_rel=cfg.get("atlas", {}).get("atlas_json", None)
     )
     elapsed_s = time.time() - t0
-    # === ここまで追加 ===
-
-    render_video(
-        out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value,
-        assets_dir=assets_dir, atlas_json_rel=cfg.get("atlas", {}).get("atlas_json", None)
-    )
 
     run_log = {
         "out_mp4": out_mp4,
@@ -85,19 +79,23 @@ def main():
         "frames": int(duration_s * fps),
         "assets_dir": assets_dir,
         "exp_name": exp_name,
-        # 追加：
         "elapsed_s": round(elapsed_s, 3),
-        "views": stats.get("views"),
-        "fallback_frames": stats.get("fallback_frames"),
-        "first_fallback_ms": stats.get("first_fallback_ms"),
     }
+    run_log.update(stats)
+
     with open(os.path.join(exp_dir, "run.log.json"), "w", encoding="utf-8") as f:
         json.dump(run_log, f, ensure_ascii=False, indent=2)
 
+    # Output summary CSV for key metrics
+    summary_keys = ["exp_name", "duration_s", "elapsed_s", "fallback_frames", "first_fallback_ms"]
     with open(os.path.join(exp_dir, "summary.csv"), "w", encoding="utf-8") as f:
         f.write("key,value\n")
-        for k, v in run_log.items():
-            f.write(f"{k},{v}\n")
+        for k in summary_keys:
+            if k in run_log:
+                f.write(f"{k},{run_log[k]}\n")
+        views = run_log.get("views", {})
+        for view_name, count in views.items():
+            f.write(f"views_{view_name},{count}\n")
 
 
 if __name__ == "__main__":

@@ -19,6 +19,8 @@ class Timeline:
         events = []
         for item in raw:
             t = item.get("t_ms")
+            if t is None:
+                continue
             payload = {k: item[v] if key_map and v in item else item.get(k) for k, v in (key_map or {}).items()}
             # Fallback: if no key_map, take the whole item minus t_ms
             if not key_map:

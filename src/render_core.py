@@ -107,17 +107,17 @@ def render_video(
             views_count[view] = views_count.get(view, 0) + 1
             views = atlas_idx["views"]
 
-            if view not in views or mouth not in views[view]:
+            path_rel = views.get(view, {}).get(mouth)
+            if not path_rel:
+                used_fallback = True
                 fb_view = atlas_idx.get("fallback", {}).get("view", "front")
                 fb_mouth = _normalize_mouth(atlas_idx.get("fallback", {}).get("mouth", "closed"))
                 path_rel = views.get(fb_view, {}).get(fb_mouth)
-                used_fallback = True
-            else:
-                path_rel = views[view][mouth]
 
             if path_rel:
                 try:
-                    src = _load_rgba(os.path.join(assets_dir, path_rel))
+                    asset_path = os.path.join(assets_dir, path_rel)
+                    src = _load_rgba(asset_path)
                     tgt_h = max(1, int(height * target_h_ratio))
                     scale = tgt_h / src.shape[0]
                     tgt_w = max(1, int(src.shape[1] * scale))
