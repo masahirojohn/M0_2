@@ -1,5 +1,6 @@
 from __future__ import annotations
 import argparse, os, json
+import time
 from typing import Dict, Any
 import yaml
 from src.timeline import Timeline
@@ -63,6 +64,15 @@ def main():
     os.makedirs(exp_dir, exist_ok=True)
     out_mp4 = os.path.join(exp_dir, "demo.mp4")
 
+    # === ここから追加：実行時間測定＋renderの統計を取得 ===
+    t0 = time.time()
+    stats = render_video(
+        out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value,
+        assets_dir=assets_dir, atlas_json_rel=cfg.get("atlas", {}).get("atlas_json", None)
+    )
+    elapsed_s = time.time() - t0
+    # === ここまで追加 ===
+
     render_video(
         out_mp4, width, height, fps, duration_s, crossfade_frames, merged_value,
         assets_dir=assets_dir, atlas_json_rel=cfg.get("atlas", {}).get("atlas_json", None)
@@ -75,6 +85,11 @@ def main():
         "frames": int(duration_s * fps),
         "assets_dir": assets_dir,
         "exp_name": exp_name,
+        # 追加：
+        "elapsed_s": round(elapsed_s, 3),
+        "views": stats.get("views"),
+        "fallback_frames": stats.get("fallback_frames"),
+        "first_fallback_ms": stats.get("first_fallback_ms"),
     }
     with open(os.path.join(exp_dir, "run.log.json"), "w", encoding="utf-8") as f:
         json.dump(run_log, f, ensure_ascii=False, indent=2)
