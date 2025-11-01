@@ -1,7 +1,7 @@
 {
   "atlas_path": "tests/phaseA_pose_only/assets/atlas.min.json",
   "timelines": {
-    "pose": "tests/phaseA_pose_only/timelines/pose_timeline.sample.json"
+    "pose": "tests/phaseA_pose_only/timelines/pose_timeline_yaw.json"
   },
   "render": {
     "fps": 25,
