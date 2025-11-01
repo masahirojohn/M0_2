@@ -1,0 +1,26 @@
+io:
+  exp_name: exp_phaseA_yaw
+  assets_dir: tests/phaseA_pose_only/assets
+
+inputs:
+  pose_timeline: tests/phaseA_pose_only/timelines/pose_timeline_yaw.flat.json
+  mouth_timeline:
+  expression_timeline:
+
+atlas:
+  atlas_json: atlas.min.json
+
+video:
+  duration_s: 4
+
+render:
+  enable_pitch_buckets: false
+
+pose_buckets:
+  yaw_deg:
+    front_max_abs: 12.0
+    left30_min: -22.5
+    right30_min: 22.5
+    hysteresis_deg: 4.0
+  pitch_deg:
+    enable: false

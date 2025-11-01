@@ -84,7 +84,11 @@ def render_video(
 
     atlas_idx = None
     if assets_dir and atlas_json_rel:
-        atlas_idx = load_atlas_index(os.path.join(assets_dir, atlas_json_rel))
+        if os.path.isabs(atlas_json_rel):
+            atlas_path = atlas_json_rel
+        else:
+            atlas_path = os.path.join(assets_dir, atlas_json_rel)
+        atlas_idx = load_atlas_index(atlas_path)
 
     target_h_ratio = 0.32
 

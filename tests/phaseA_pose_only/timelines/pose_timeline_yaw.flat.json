@@ -1,0 +1,32 @@
+{
+  "timeline": [
+    {
+      "t_ms": 0,
+      "yaw": 0,
+      "pitch": 0.0,
+      "roll": 0.0,
+      "bbox": null
+    },
+    {
+      "t_ms": 1000,
+      "yaw": 30,
+      "pitch": 0.0,
+      "roll": 0.0,
+      "bbox": null
+    },
+    {
+      "t_ms": 2000,
+      "yaw": -30,
+      "pitch": 0.0,
+      "roll": 0.0,
+      "bbox": null
+    },
+    {
+      "t_ms": 3000,
+      "yaw": 0,
+      "pitch": 0.0,
+      "roll": 0.0,
+      "bbox": null
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+name: PhaseA Artifacts
+on:
+  workflow_dispatch: {}
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  phaseA-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          pip install -r requirements.txt || true
+
+      - name: Convert v1 -> flat (yaw)
+        run: |
+          python tests/phaseA_pose_only/tools/pose_v1_to_flat.py \
+            tests/phaseA_pose_only/timelines/pose_timeline_yaw.json \
+            tests/phaseA_pose_only/timelines/pose_timeline_yaw.flat.json
+
+      - name: Run PhaseA (yaw only)
+        run: |
+          python m0_runner.py --config tests/phaseA_pose_only/configs/phaseA_yaw.config.json
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phaseA-yaw-outputs
+          path: |
+            tests/out/exp_phaseA_yaw/**/*.mp4
+            tests/out/exp_phaseA_yaw/**/*.json
+            tests/out/exp_phaseA_yaw/**/*.csv
+          if-no-files-found: warn

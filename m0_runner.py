@@ -42,13 +42,25 @@ def main():
 
     crossfade_frames = int(cfg["render"]["crossfade_frames"])
 
-    mouth_json = os.path.join(assets_dir, cfg["inputs"]["mouth_timeline"])
-    pose_json = os.path.join(assets_dir, cfg["inputs"]["pose_timeline"])
-    expr_json = os.path.join(assets_dir, cfg["inputs"]["expression_timeline"])
+    def load_timeline(cfg_key: str) -> Timeline:
+        timeline_path = cfg["inputs"].get(cfg_key)
+        if not timeline_path:
+            return Timeline([])
 
-    mouth_tl = Timeline.load_json(mouth_json)
-    pose_tl = Timeline.load_json(pose_json)
-    expr_tl = Timeline.load_json(expr_json)
+        # if path is absolute, use it as is. Otherwise, relative to assets_dir
+        if os.path.isabs(timeline_path):
+            json_path = timeline_path
+        else:
+            json_path = os.path.join(assets_dir, timeline_path)
+
+        if not os.path.exists(json_path):
+            # This is a soft error, as some pipelines may not use all timelines
+            return Timeline([])
+        return Timeline.load_json(json_path)
+
+    mouth_tl = load_timeline("mouth_timeline")
+    pose_tl = load_timeline("pose_timeline")
+    expr_tl = load_timeline("expression_timeline")
 
     def merged_value(t_ms: int) -> Dict[str, Any]:
         m = mouth_tl.value_at(t_ms)
