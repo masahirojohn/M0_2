@@ -1,18 +1,27 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-if [ -z "$1" ]; then
-  echo "Usage: $0 {yaw|pitch|roll}"
-  exit 1
-fi
+ROOT_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
+CONF="${ROOT_DIR}/tests/phaseA_pose_only/configs/phaseA.config.json"
 
-TEST_NAME=$1
-CONFIG_FILE="tests/phaseA_pose_only/configs/phaseA.config.yaml"
-OVERRIDE_FILE="tests/phaseA_pose_only/configs/${TEST_NAME}.override.yaml"
-M0_RUNNER="m0_runner.py"
+echo "[PhaseA] Using config: $CONF"
 
-if [ ! -f "$OVERRIDE_FILE" ]; then
-  echo "Error: Override file not found for test: ${TEST_NAME}"
-  exit 1
-fi
+# sanity check
+python - <<'PY' "$CONF"
+import json,sys
+conf=json.load(open(sys.argv[1]))
+assert "atlas_path" in conf and "timelines" in conf
+print("[PhaseA] Config ok. Pose:", conf["timelines"]["pose"])
+PY
 
-python $M0_RUNNER --config $CONFIG_FILE --override $OVERRIDE_FILE
+# === Runner呼び出し（M0_2仕様） ===
+python m0_runner.py --config "$CONF"
+
+OUT_DIR=$(python - <<'PY' "$CONF"
+import json,sys
+conf=json.load(open(sys.argv[1]))
+print(conf["output"]["dir"])
+PY
+)
+echo "[PhaseA] Outputs under: $OUT_DIR"
+ls -la "$OUT_DIR" || true
