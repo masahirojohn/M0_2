@@ -1,16 +1,16 @@
-# Phase A – Yaw only override (optimized)
+# Phase A – Yaw only override (robust paths)
 # Base: configs/m0.yaml
 
 io:
   output:
     dir: tests/out/exp_phaseA_yaw
-    basename: phaseA_yaw
+    basename: phaseA_yaw_guard         # ← ガード名（exp_baseline が出たら未適用）
 
 assets:
-  atlas_path: assets/atlas.min.json        # ← 短縮パス版（推奨）
+  atlas_path: tests/phaseA_pose_only/assets/atlas.min.json
 
 timelines:
-  pose: timelines/pose_timeline_yaw.flat.json
+  pose: tests/phaseA_pose_only/timelines/pose_timeline_yaw.flat.json
   mouth: null
   expression: null
 
@@ -20,7 +20,7 @@ render:
   use_expression: false
   enable_pitch_buckets: true
   crossfade_ms:
-    pose_switch: 120                       # ← optional: smoother
+    pose_switch: 120
 
 pose_buckets:
   yaw_deg:
@@ -37,4 +37,3 @@ pose_buckets:
 
 logging:
   emit_frame_csv: true
-
