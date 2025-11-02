@@ -11,3 +11,8 @@ env/
 *.mp4
 out/
 tests/out/
+
+# ただし結果のJSON/CSVは許可したい（例外）
+!tests/out/**/run.log.json
+!tests/out/**/summary.csv
+!tests/out/**/frame_events.csv
