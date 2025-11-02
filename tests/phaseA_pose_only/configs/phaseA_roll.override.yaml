@@ -1,0 +1,48 @@
+# Phase A – Roll only override (optimized)
+# Base: configs/m0.yaml
+
+io:
+  output:
+    dir: tests/out/exp_phaseA_roll
+    basename: phaseA_roll
+
+assets:
+  atlas_path: assets/atlas.min.json
+
+timelines:
+  pose: timelines/pose_timeline_roll.flat.json
+  mouth: null
+  expression: null
+
+render:
+  fps: 25
+  mouth_mode: fixed_close
+  use_expression: false
+  enable_pitch_buckets: false       # Rollのみ検証なのでOFF
+  crossfade_ms:
+    pose_switch: 120
+
+pose_buckets:
+  yaw_deg:
+    front_max_abs: 12.0
+    left30_min: -22.5
+    right30_min: 22.5
+    hysteresis_deg: 4.0
+    enable: false                   # RollテストなのでOFF
+  pitch_deg:
+    up15_min: 10.0
+    down15_max: -10.0
+    enable: false                   # RollテストなのでOFF
+
+  # Rollのしきい値（仮値）→1回目のテスト後チューニング予定
+  roll_deg:
+    left_min: -8.0
+    right_min: 8.0
+    hysteresis_deg: 3.0
+    enable: true
+
+  smoothing:
+    ema_frames: 3
+
+logging:
+  emit_frame_csv: true
