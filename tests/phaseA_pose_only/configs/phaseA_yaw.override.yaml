@@ -2,8 +2,9 @@
 # Base: configs/m0.yaml
 
 io:
-  out_dir: tests/out
-  exp_name: exp_phaseA_yaw
+  output:
+    dir: tests/out/exp_phaseA_yaw
+    basename: phaseA_yaw
 
 assets:
   atlas_path: assets/atlas.min.json        # ← 短縮パス版（推奨）
